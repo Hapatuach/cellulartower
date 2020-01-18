@@ -14,7 +14,7 @@
 
 </style>
 
-<!-- This is a comment 
+<!-- This is a comment
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaHvf1CQ8r79zRe_6aXnhs75uf6LZjse0&callback=initMap">
     </script>
@@ -24,12 +24,14 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaHvf1CQ8r79zRe_6aXnhs75uf6LZjse0&sensor=true"></script><script type="text/javascript">
 
- 
+
 var longitude ;
 var latitude ;
 var map;
 var infowindow = new google.maps.InfoWindow();
-var  tableid  ='1CfqaLH6w9Gx8x7sxE74YIqYpEOi2etMJEU0CfVA';
+//var  tableid  ='1CfqaLH6w9Gx8x7sxE74YIqYpEOi2etMJEU0CfVA';
+var  tableid  ='1Dt2SSgAidT--Gla4ucCgcb4d7D_y0Kx-GL6UwWCRVmM';
+
 
 var circle;
 var geocoder;
@@ -39,12 +41,28 @@ var dis_in_meter = 0;
 var loc_query ;
 var my_zoom = 16 ;
 var my_distance = 500;
-  
+
+// Client ID and API key from the Developer Console
+		var API_KEY = 'AIzaSyBwO4N0MalXYEyt5Wj9rK_wAEcJrDDENaw';
+
+		// Empty clientId
+		CLIENT_ID = "";
+		// Array of API discovery doc URLs for APIs used by the quickstart
+		var DISCOVERY_DOCS = [ "https://sheets.googleapis.com/$discovery/rest?version=v4" ];
+		// Authorization scopes required by the API; multiple scopes can be
+		// included, separated by spaces.
+		var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+		/**
+		 *  On load, called to load the auth2 library and API client library.
+		 */
+
 function initialize() {
 
 
+alert ("this is = " +  "0="+  locations[0][0] + "\n- 1=" + locations[0][1] + " - 2=" + locations[0][2] );
+alert ("this is 2= " + locations[2000]);
 
-geocoder = new google.maps.Geocoder(); 
+geocoder = new google.maps.Geocoder();
 
   var myOptions = {
     zoom: my_zoom,
@@ -54,16 +72,17 @@ geocoder = new google.maps.Geocoder();
 
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   var useragent = navigator.userAgent;
-    longitude = 34.79809; 
-    latitude = 32.06684; 
-    
+      longitude = 34.79809;
+      latitude  = 32.06684;
+
 
    if (window.android)
     {
-         
- 	latitude  = window.android.getLatitude();
+
+ 	      latitude  = window.android.getLatitude();
         longitude = window.android.getLongitude();
-    }  
+    }
+
   showLocation(latitude,longitude);    // new added
 
  //   if(navigator.geolocation){
@@ -82,25 +101,26 @@ geocoder = new google.maps.Geocoder();
 function showLocation(lat,lon) {
   //  latitude = position.coords.latitude;
   //  longitude = position.coords.longitude;
-  
 
-    
+
+
 
       var initialLocation = new google.maps.LatLng(lat,lon);
       contentString = "אתה נמצא כאן ";
 
 
-     layer = new google.maps.FusionTablesLayer({
-          query: {
-            select: 'ktv',
-            from: tableid,
-            where: "ST_INTERSECTS('ktv', CIRCLE(LATLNG("+latitude +","+ longitude + "),500))"
-          },
-          map: map,
-          styleId: 1,
-          templateId: 1
-        });
-        
+  //   layer = new google.maps.FusionTablesLayer({
+  //        query: {
+  //          select: 'ktv',
+  //          from: tableid,
+  //          where: "ST_INTERSECTS('ktv', CIRCLE(LATLNG("+latitude +","+ longitude + "),500))"
+  //        },
+  //        map: map,
+  //        styleId: 1,
+  //        templateId: 1
+  //      });
+
+
 
        circle = new google.maps.Circle({
        center: new google.maps.LatLng(latitude, longitude),
@@ -113,25 +133,27 @@ function showLocation(lat,lon) {
        strokeWeight: 3
      });
 
-      map.setCenter(initialLocation);  
+      map.setCenter(initialLocation);
       infowindow.setContent(contentString);
       infowindow.setPosition(initialLocation);
-      infowindow.open(map)
-  
+      infowindow.open(map);
+
+      ShowMarkers(my_distance);
+
 
 }// end of showlocation
 
 function showLocationByAdress(lt,lg) {
     latitude = lt;
     longitude =lg;
-    
- 
+
+
      var initialLocation = new google.maps.LatLng(latitude,longitude);
      changeLocation(latitude,longitude,my_distance);
- 
 
 
-}// end of showLocationByAdress  
+
+}// end of showLocationByAdress
 
 function errorHandler(err) {
   if(err.code == 1) {
@@ -142,30 +164,31 @@ function errorHandler(err) {
 }//end of errorHandler
 
 
-function changeLocation(lt , lg , meters ) 
+function changeLocation(lt , lg , meters )
 {
     latitude      = lt;
     longitude     = lg;
     dis_in_meters = meters;
- 
-    loc_query = "ST_INTERSECTS('ktv', CIRCLE(LATLNG(" + latitude + ","+ longitude+")," + dis_in_meters+ "))";
 
-   
-    
-   layer.setOptions({
-                query: {
-                 select: 'ktv',
-                 from:  tableid,
-                 where: loc_query
-               }
-             });
-  
+alert ("changelocation")
+ //   loc_query = "ST_INTERSECTS('ktv', CIRCLE(LATLNG(" + latitude + ","+ longitude+")," + dis_in_meters+ "))";
+
+
+
+  // layer.setOptions({
+    //            query: {
+      //           select: 'ktv',
+        //         from:  tableid,
+          //       where: loc_query
+            //   }
+            // });
+
 }// end of changeLocation
 
 function changeRadius(meters)
 {
- 
-  var mtr =  parseInt(meters); 
+
+  var mtr =  parseInt(meters);
 
   if (meters != "")
  {
@@ -177,8 +200,9 @@ function changeRadius(meters)
 
 
 function centerAddress() {
-  var address = txtAddress.value;
-geocoder.geocode( { 'address': address},
+
+   var address = txtAddress.value;
+   geocoder.geocode( { 'address': address},
          function(results, status) {
 
    if (status == google.maps.GeocoderStatus.OK) {
@@ -187,23 +211,22 @@ geocoder.geocode( { 'address': address},
           longitude= results[0].geometry.location.lng();
           changeLocation (latitude ,longitude,500);    // new added
 
-      
+
            map.setCenter(results[0].geometry.location);
            map.setZoom(15);
            circle.setCenter(results[0].geometry.location);
-           changeRadius(500); 
-           contentString = "בחרת לחפש מסביב לכתובת - " + address;    
+           changeRadius(500);
+           contentString = "בחרת לחפש מסביב לכתובת - " + address;
            infowindow.setContent(contentString);
            infowindow.setPosition(results[0].geometry.location);
            infowindow.open(map);
 
- //         
- //       } 
-  } else { 
-    alert("Geocode was not successful for the following reason: " + status); 
+
+  } else {
+    alert("Geocode was not successful for the following reason: " + status);
   }
     });
-  
+
   return false;
 
 }// end of centerAddress
@@ -212,24 +235,24 @@ function centerMe(lat,lon,sug) {
 
           if (sug == 1 )
 	   {
-		changeLocation (lat ,lon,my_distance);     
-	        contentString = "אתה כאן"  ;    
-	        
+		changeLocation (lat ,lon,my_distance);
+	        contentString = "אתה כאן"  ;
+
            }
 	 else
            {
-		changeLocation (lat ,lon,my_distance);     
-	        contentString = "הכי קרוב אלי "  ;   
+		changeLocation (lat ,lon,my_distance);
+	        contentString = "הכי קרוב אלי "  ;
 	   }
 
           changeLocation (lat ,lon,my_distance);    // new added
           var initialLocation = new google.maps.LatLng(lat,lon);
- 
+
            map.setCenter(initialLocation);
- 	   map.setZoom(map.getZoom()-1);
+      	   map.setZoom(map.getZoom()-1);
            map.setZoom(my_zoom);
            circle.setCenter(initialLocation);
-           changeRadius(my_distance); 
+           changeRadius(my_distance);
            infowindow.setContent(contentString);
            infowindow.setPosition(initialLocation);
            infowindow.open(map);
@@ -237,21 +260,176 @@ function centerMe(lat,lon,sug) {
 
 }// end of centerMe
 
+function ShowMarkers(dis_in_meters)
+{
+	var infowindow =  new google.maps.InfoWindow({});
+	var marker, count;
+
+	for (count = 0; count < 4 ; count++)
+   {
+        dis = (distance(latitude,longitude,locations[count][1], locations[count][2]))  ;
+        alert ("dis "  + dis);
+      //  if ( dis < 6 )
+      //  {
+
+      		marker = new google.maps.Marker({
+      		position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+     //           icon: "https://img.icons8.com/cotton/64/000000/input-antenna-settings.png",
+		      icon : 'http://maps.google.com/mapfiles/kml/paddle/red-square.png',
+		      map: map,
+     		  title: locations[count][0]
+	    });
+
+	google.maps.event.addListener(marker, 'click', (function (marker, count)
+   {
+      		return function () {
+        		infowindow.setContent(locations[count][0]);
+        		infowindow.open(map, marker);
+      		}
+		        })(marker, count));
+
+      //}
+	  }
+
+}// end of ShowMarkers
+
+function distance(lat1,lon1,lat2,lon2)
+ {
+
+	var R = 6371; // km (change this constant to get miles)
+	var dLat = (lat2-lat1) * Math.PI / 180;
+	var dLon = (lon2-lon1) * Math.PI / 180;
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+		      Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+		      Math.sin(dLon/2) * Math.sin(dLon/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	var d = R * c;
+
+	if (d>1)   return Math.round(d) ;
+	else
+    if (d<=1) return 0;
+	return d;
+
+  }// end of distance
+
+function Create2DArray(rows,columns)
+ {
+   var x = new Array(rows);
+   for (var i = 0; i < rows; i++) {
+       x[i] = new Array(columns);
+   }
+   return x;
+ }  // end of  Create2DArray
+
+//----------------------------------------------------------------------------------//
+//   READ FROM GOOGLE SPREADSHEET                                                   //
+//----------------------------------------------------------------------------------//
+function handleClientLoad()
+ {
+   alert("handleclient");
+	 gapi.load('client:auth2', initClient);
+ }
+		/**
+		 *  Initializes the API client library and sets up sign-in state
+		 *  listeners.
+		 */
+function initClient()
+ {
+	alert("init client");
+	 gapi.client
+		.init({
+			apiKey : API_KEY,
+			clientId : CLIENT_ID,
+			discoveryDocs : DISCOVERY_DOCS,
+			scope : SCOPES
+		})
+		.then(
+			function() {
+				console
+						.log("init gapi completes, start read data from spreadsheet");
+				listMajors();
+			}, function(error) {
+				appendPre(JSON.stringify(error, null, 2));
+			});
+}
+	/**
+	 * Append a pre element to the body containing the given message
+	 * as its text node. Used to display the results of the API call.
+	 *
+	 * @param {string} message Text to be placed in pre element.
+	 */
+	function appendPre(message) {
+
+		var pre = document.getElementById('content');
+		var textContent = document.createTextNode(message + '\n');
+		pre.appendChild(textContent);
+
+	}
+	/**
+	 * Print the names and majors of students in a sample spreadsheet:
+	 * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+	 */
+function listMajors()
+{
+	alert("list majors");
+	gapi.client.sheets.spreadsheets.values.get({
+		spreadsheetId : '1Dt2SSgAidT--Gla4ucCgcb4d7D_y0Kx-GL6UwWCRVmM',
+		range : 'DataL!A2:C',
+	}).then(function(response) {
+		var range = response.result;
+
+
+		if (range.values.length > 0) {
+			//appendPre('Name, Major:');
+
+			locations  = Create2DArray(range.values.length,3);
+
+			for (i = 0; i <range.values.length; i++) {
+				var row = range.values[i];
+				  locations[i]= row ;
+
+
+
+				// Print columns A and E, which correspond to indices 0 and 4.
+			//appendPre(row[0] + ', ' + row[1] +', ' + row[2] + ', ' + row[3] +', ' + locations[i][4] + ', ' +  locations[i][9] + 'len:' +locations.length );
+		//		appendPre( "row= " + locations[i] + " , " +  locations[i].length);
+			}
+		} else {
+			appendPre('No data found.');
+		}
+
+            var len2 = locations.length;
+            alert ("lengt of locations is [0] : " +  len2);
+            initialize();
+	  //    rearrangeTab(locations);
+          //  displayvalues(locations);
+          // initialize    createTable(tableData);
+
+	}, function(response) {
+		appendPre('Error: ' + response.result.error.message);
+	});
+
+
+
+
+ }
 </script>
 
-</head>
-<body onload="initialize();">
-<div id="wrapper">
+
+<body>
+
+
+
 <div id="myform">
 <form onsubmit="return centerAddress();">
 <select onchange="changeRadius(this.value);">
-      <option value="500">0.5 km</option> 
-      <option value="1000">1 km</option> 
-      <option value="1500">1.5 km</option> 
+      <option value="500">0.5 km</option>
+      <option value="1000">1 km</option>
+      <option value="1500">1.5 km</option>
       <option value="2000">2 km</option>
       <option value="3000">3 km</option>
       <option value="5000">5 km</option>
-      <option value="10000">10 km</option> 
+      <option value="10000">10 km</option>
       <option value="15000">15 km</option>
       <option value="20000">20 km</option>
       <option value="25000">25 km</option>
@@ -261,10 +439,16 @@ function centerMe(lat,lon,sug) {
 
 <input type="text" id="txtAddress" size=12 onchange="centerAddress();" placeholder="כתובת"/>
 <input type="submit" id="btnSearch" value="GO"  />
-  
+
 </form>
 </div>
 <div id="map_canvas"></div>
-</div>
+
+<script async defer src="https://apis.google.com/js/api.js"
+		onload="handleClientLoad()"
+		onreadystatechange="if (this.readyState === 'complete') this.onload()">
+
+</script>
 </body>
+</head>
 </html>
