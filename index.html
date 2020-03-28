@@ -74,11 +74,11 @@ geocoder = new google.maps.Geocoder();
       latitude  = 32.06684;
 
  	
-   if (window.Android)
+   if (window.android)
     {
 
- 	latitude  = window.Android.getLatitude();
-        longitude = window.Android.getLongitude();
+ 	latitude  = window.android.getLatitude();
+        longitude = window.android.getLongitude();
     }
 	
    Android.showToast("java script - my location : " + longitude + latitude);
