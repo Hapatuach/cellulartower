@@ -220,8 +220,7 @@ function ShowMarkers(dis_in_meters)
 	var infowindow =  new google.maps.InfoWindow({});
 	var  count;
     var location_ok  = true  ;
-    alert ("SHOW :  " + "dis_in_meters = " + dis_in_meters + "latitude :" + latitude + "longitude = " + longitude);
-  
+   
   // init marker array before drawing // 
     for (var i = 0 ; i < markers.length; i ++)
     {
@@ -317,7 +316,7 @@ function Create2DArray(rows,columns)
 //----------------------------------------------------------------------------------//
 function handleClientLoad()
  {
-   alert("handleclient");
+   //alert("handleclient");
    gapi.load('client:auth2', initClient);
  }
 		/**
