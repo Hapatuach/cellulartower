@@ -1,9 +1,8 @@
- 
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no" />
+ <meta name="author" content="Alon Sandak">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <title>Cellular Tower Around</title>
 
@@ -16,14 +15,6 @@
 
 </style>
 
-<!-- This is a comment
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaHvf1CQ8r79zRe_6aXnhs75uf6LZjse0&callback=initMap">
-    </script>
-
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script><script type="text/javascript">
- -->
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaHvf1CQ8r79zRe_6aXnhs75uf6LZjse0&sensor=true"></script><script type="text/javascript">
 
 
@@ -32,8 +23,7 @@ var latitude ;
 var map;
 var markers = [];
 var infowindow = new google.maps.InfoWindow();
-//var  tableid  ='1CfqaLH6w9Gx8x7sxE74YIqYpEOi2etMJEU0CfVA';
-var  tableid  ='1Dt2SSgAidT--Gla4ucCgcb4d7D_y0Kx-GL6UwWCRVmM';
+var tableid  ='1Dt2SSgAidT--Gla4ucCgcb4d7D_y0Kx-GL6UwWCRVmM';
 
 
 var circle;
@@ -61,10 +51,11 @@ var my_distance = 500;
 
 function initialize() {
 
-
-alert ("this is = " +  "0="+  locations[0][0] + "\n- 1=" + locations[0][1] + " - 2=" + locations[0][2] );
-alert ("this is 2= " + locations[2000]);
-
+/**
+// Debug only
+   alert ("this is = " +  "0="+  locations[0][0] + "\n- 1=" + locations[0][1] + " - 2=" + locations[0][2] );
+   alert ("this is 2= " + locations[2000]);
+*/
 geocoder = new google.maps.Geocoder();
 
   var myOptions = {
@@ -81,24 +72,12 @@ geocoder = new google.maps.Geocoder();
 
    if (window.Android)
     {
-
- 	    latitude  = window.Android.getLatitude();
+	latitude  = window.Android.getLatitude();
         longitude = window.Android.getLongitude();
     }
 
   showLocation(latitude,longitude);    // new added
-
- //   if(navigator.geolocation){
- //      // timeout at 60000 milliseconds (60 seconds)
- //      var options = {timeout: 60000};
- //      navigator.geolocation.getCurrentPosition(showLocation,
- //                                               errorHandler,
-   //                                             options);
- //   }else{
-  //     alert("המערכת לא מזהה את מיקומך , ניתן להזין כתובת לבחון מה קיים בסביבתה");
- //      is_Geo = false;
- //   }
-
+  
 }// end of initialize
 
 function showLocation(lat,lon) {
@@ -106,20 +85,15 @@ function showLocation(lat,lon) {
     var initialLocation = new google.maps.LatLng(lat,lon);
     contentString = "אתה נמצא כאן ";
 
-
- 
-
-
-
-       circle = new google.maps.Circle({
-       center: new google.maps.LatLng(latitude, longitude),
-       radius: my_distance,
-       clickable : false,
-       map: map,
-       fillOpacity: 0.2,
-       strokeOpacity: 0.5,
-       strokeColor : "#FFAA00",
-       strokeWeight: 3
+    circle = new google.maps.Circle({
+     center: new google.maps.LatLng(latitude, longitude),
+     radius: my_distance,
+     clickable : false,
+     map: map,
+     fillOpacity: 0.2,
+     strokeOpacity: 0.5,
+     strokeColor : "#FFAA00",
+     strokeWeight: 3
      });
 
       map.setCenter(initialLocation);
@@ -269,10 +243,8 @@ function ShowMarkers(dis_in_meters)
             location_ok = true ; 
             } 
             
-        // alert ("dis "  + dis  + "location_ok = " + location_ok);
-      // if (  (dis < (dis_in_meters/1000 ))  && (location_ok = true)  )
-       if (  (dis < (dis_in_meters/1000 ))  && (location_ok = true)  )
-       {
+         if (  (dis < (dis_in_meters/1000 ))  && (location_ok = true)  )
+            {
 
             if (locations[count][0] == '6')
             {
@@ -281,7 +253,7 @@ function ShowMarkers(dis_in_meters)
                 
          	var	marker = new google.maps.Marker({
         		position: new google.maps.LatLng(locations[count][18], locations[count][19 ]),
-      //        icon: "https://img.icons8.com/cotton/64/000000/input-antenna-settings.png",
+                 //     icon: "https://img.icons8.com/cotton/64/000000/input-antenna-settings.png",
 		 //     icon : 'http://maps.google.com/mapfiles/kml/paddle/red-square.png',
 		        map: map,
      	    	  title: locations[count][0]
@@ -293,12 +265,10 @@ function ShowMarkers(dis_in_meters)
                     {
                       var contentString =  ("<b>Address :</b>" + locations[count][3]  + " " +                                                   locations[count][4]  + "<br></br>" +
                                              "<b>Company :</b>" +  locations[count][1]  + "<br></br>" +
-                                             "<b>Where :</b>" + locations[count][9]  + "<br></br>" +
-                                             locations[count][10] + "<br></br>" +
-                                             locations[count][12] + "<br></br>" +
-                                             locations[count][14] + "<br></br>" +
-                                             locations[count][15] + "<br></br>" +
-                                             locations[count][16]  );
+                                             "<b>Type of :</b>" + locations[count][9]  + "<br></br>" +
+                                             "<b>Highest intensity measured locations :</b>" + locations[count][16] + "<br></br>" +
+                                             "<b>Last checked :</b>" + locations[count][12] );
+                                              
         		      infowindow.setContent(contentString);
         		      infowindow.open(map, marker);
       		        }
@@ -347,7 +317,7 @@ function Create2DArray(rows,columns)
 function handleClientLoad()
  {
    alert("handleclient");
-	 gapi.load('client:auth2', initClient);
+   gapi.load('client:auth2', initClient);
  }
 		/**
 		 *  Initializes the API client library and sets up sign-in state
@@ -355,7 +325,7 @@ function handleClientLoad()
 		 */
 function initClient()
  {
-	alert("init client");
+	//alert("init client");
 	 gapi.client
 		.init({
 			apiKey : API_KEY,
@@ -391,7 +361,7 @@ function initClient()
 	 */
 function listMajors()
 {
-	alert("list majors");
+	//alert("list majors");
 	gapi.client.sheets.spreadsheets.values.get({
 		spreadsheetId : '1Dt2SSgAidT--Gla4ucCgcb4d7D_y0Kx-GL6UwWCRVmM',
 		range : 'DataM!A2:T',
@@ -400,8 +370,7 @@ function listMajors()
 
 
 		if (range.values.length > 0) {
-			//appendPre('Name, Major:');
-
+	 
 			locations  = Create2DArray(range.values.length,20);
 
 			for (i = 0; i <range.values.length; i++) {
@@ -419,12 +388,9 @@ function listMajors()
 		}
 
             var len2 = locations.length;
-            alert ("lengt of locations is [0] : " +  len2);
+         //   alert ("lengt of locations is [0] : " +  len2);
             initialize();
-	  //    rearrangeTab(locations);
-          //  displayvalues(locations);
-          // initialize    createTable(tableData);
-
+	 
 	}, function(response) {
 		appendPre('Error: ' + response.result.error.message);
 	});
