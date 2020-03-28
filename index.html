@@ -73,15 +73,14 @@ geocoder = new google.maps.Geocoder();
       longitude = 34.79809;
       latitude  = 32.06684;
 
- 	
+   Android.showToast("my location : " + longitude + latitude);
+	
    if (window.android)
     {
 
- 	latitude  = window.android.getLatitude();
+ 	    latitude  = window.android.getLatitude();
         longitude = window.android.getLongitude();
     }
-	
-   android.showToast("java script - my location : " + longitude + latitude);
 
   showLocation(latitude,longitude);    // new added
 
@@ -288,11 +287,10 @@ function ShowMarkers(dis_in_meters)
                {
       		        return function ()
                     {
-                      var contentString =  ("City :"      +  locations[count][3]  + "<br></br>" +                                                   
-					    "Address :"   + locations[count][4]  + "<br></br>" +
-                                            "Company :"   +  locations[count][1]  + "<br></br>" +
-                                             "Location :" + locations[count][9]  + "<br></br>" +
-                                            "x :" + locations[count][10] + "<br></br>" +
+                      var contentString =  ( locations[count][3]  + "<br></br>" +                                                    locations[count][4]  + "<br></br>" +
+                                             locations[count][1]  + "<br></br>" +
+                                             locations[count][9]  + "<br></br>" +
+                                             locations[count][10] + "<br></br>" +
                                              locations[count][12] + "<br></br>" +
                                              locations[count][14] + "<br></br>" +
                                              locations[count][15] + "<br></br>" +
