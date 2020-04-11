@@ -133,7 +133,7 @@ function changeLocation(lt , lg , meters )
     longitude     = lg;
     dis_in_meters = meters;
 
-alert ("changelocation new");
+//alert ("changelocation new");
 
                 
 ShowMarkers(dis_in_meters);
@@ -156,6 +156,9 @@ function changeRadius(meters)
 
 function centerAddress() {
 
+// Init Radius Select DropDown list   
+   document.getElementById("SelectRadius").selectedIndex = "0";
+	
    var address = txtAddress.value;
    geocoder.geocode( { 'address': address},
          function(results, status) {
@@ -245,15 +248,11 @@ function ShowMarkers(dis_in_meters)
          if (  (dis < (dis_in_meters/1000 ))  && (location_ok = true)  )
             {
 
-            if (locations[count][0] == '6')
-            {
-                alert ("dis "  + dis  + "alon !!! location_ok = " + location_ok);}
                 
                 
          	var	marker = new google.maps.Marker({
         		position: new google.maps.LatLng(locations[count][18], locations[count][19 ]),
-                 //     icon: "https://img.icons8.com/cotton/64/000000/input-antenna-settings.png",
-		 //     icon : 'http://maps.google.com/mapfiles/kml/paddle/red-square.png',
+ 		 //     icon : 'http://maps.google.com/mapfiles/kml/paddle/red-square.png',
 		        map: map,
      	    	  title: locations[count][0]
 	            });
@@ -408,7 +407,8 @@ function listMajors()
 
 <div id="myform">
 <form onsubmit="return centerAddress();">
-<select onchange="changeRadius(this.value);">
+<select id="SelectRadius" onchange="changeRadius(this.value);">
+
       <option value="0500">0.5 km</option>
       <option value="1000">1 km</option>
       <option value="1500">1.5 km</option>
