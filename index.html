@@ -283,69 +283,6 @@ function ShowMarkers(dis_in_meters)
     } // end of for--loop
 
 }// end of ShowMarkers
-function ShowMarkers(dis_in_meters)
-{
-	var infowindow =  new google.maps.InfoWindow({});
-	var  count;
-    var location_ok  = true  ;
-   
-  // init marker array before drawing // 
-    for (var i = 0 ; i < markers.length; i ++)
-    {
-    	markers[i].setMap(null);
-    }
-   
-    markers = [];
-    // init marker array before drawing // 
-    
-	for (count = 0; count < locations.length ; count++)
-    {
-          if (isNaN(locations[count][18]) || isNaN(locations[count][19]))
-          {
-             location_ok = false ;
-            } 
-          else
-          {
-            dis = (distance(latitude,longitude,locations[count][18], locations[count][19]));
-            location_ok = true ; 
-            } 
-            
-         if (  (dis < (dis_in_meters/1000 ))  && (location_ok = true)  )
-            {
-
-                
-                
-         	var	marker = new google.maps.Marker({
-        		position: new google.maps.LatLng(locations[count][18], locations[count][19 ]),
- 		 //     icon : 'http://maps.google.com/mapfiles/kml/paddle/red-square.png',
-		        map: map,
-     	    	  title: locations[count][0]
-	            });
-
-	           google.maps.event.addListener(marker, 'click', (function (marker, count)
-               {
-      		        return function ()
-                    {
-                      var contentString =  ("<b>Address :</b>" + locations[count][3]  + " " +                                                   locations[count][4]  + "<br></br>" +
-                                             "<b>Company :</b>" +  locations[count][1]  + "<br></br>" +
-                                             "<b>Type of :</b>" + locations[count][9]  + "<br></br>" +
-                                             "<b>Highest intensity measured:</b>" + locations[count][16] + "<br></br>" +
-                                             "<b>Last checked :</b>" + locations[count][12]  + "<br></br>" +
-					     "<b>Data Updated to : March 2020</br>");
-                                              
-        		      infowindow.setContent(contentString);
-        		      infowindow.open(map, marker);
-      		        }
-		       })(marker, count));
-
-				markers.push(marker); 
-      
-	  } // end of if 
-    } // end of for--loop
-
-}// end of ShowMarkers
-
-
 
 function distance(lat1,lon1,lat2,lon2)
  {
