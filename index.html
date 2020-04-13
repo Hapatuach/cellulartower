@@ -256,8 +256,9 @@ function ShowMarkers(dis_in_meters)
          	var	marker = new google.maps.Marker({
         		position: new google.maps.LatLng(locations[count][18], locations[count][19 ]),
  		 //     icon : 'http://maps.google.com/mapfiles/kml/paddle/red-square.png',
+			icon : 'http://maps.google.com/mapfiles/kml/paddle/ylw-blank.png',
 		        map: map,
-     	    	  title: locations[count][0]
+     	    	        title: locations[count][0]
 	            });
 
 	           google.maps.event.addListener(marker, 'click', (function (marker, count)
@@ -269,7 +270,7 @@ function ShowMarkers(dis_in_meters)
                                              "<b>Type of :</b>" + locations[count][9]  + "<br></br>" +
                                              "<b>Highest intensity measured:</b>" + locations[count][16] + "<br></br>" +
                                              "<b>Last checked :</b>" + locations[count][12]  + "<br></br>" +
-					     "<b>Data Updated to : " + locations[count][12]  + "</br>");
+					     "<b>Data Updated to - " + locations[count][12]  + "</br>");
                                               
         		      infowindow.setContent(contentString);
         		      infowindow.open(map, marker);
