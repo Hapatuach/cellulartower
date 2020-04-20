@@ -223,9 +223,10 @@ function centerMe(lat,lon,sug) {
 
 function ShowMarkers(dis_in_meters)
 {
-    var infowindow =  new google.maps.InfoWindow({});
+    var  infowindow =  new google.maps.InfoWindow({});
     var  count;
-    var location_ok  = true  ;
+    var  location_ok  = true  ;v
+    var  myIcon  = 'purple-blank.png' ;
    
   // init marker array before drawing // 
     for (var i = 0 ; i < markers.length; i ++)
@@ -251,6 +252,19 @@ function ShowMarkers(dis_in_meters)
             
        if (  (dis < (dis_in_meters/1000 ))  && (location_ok = true)  )
           {
+		
+	  if (isNaN(locations [count][15] ))
+              { myIcon  = 'purple-blank.png' ; }
+ 	  else
+	     if ( locations [count][15] < 1.1)
+		{ myIcon  = 'ylw-blank .png' ;}
+	     else
+ 		if ( (locations [count][15] > 1 ) && ( locations [count][15] < 2.55))
+		   { myIcon  = 'red-blank.png' ;}
+	 	else
+	 	{  myIcon  = 'purple-blank.png' ;}  
+	
+		  
 		  
          	var	marker = new google.maps.Marker({
         		position: new google.maps.LatLng(locations[count][18], locations[count][19 ]),
