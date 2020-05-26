@@ -226,7 +226,7 @@ function ShowMarkers(dis_in_meters)
     var  infowindow =  new google.maps.InfoWindow({});
     var  count;
     var  location_ok  = true  ; 
-    var  myIcon  = 'red-blank.png' ;
+    var  myIcon  = 'RedIcon.png' ;
    
   // init marker array before drawing // 
     for (var i = 0 ; i < markers.length; i ++)
@@ -254,15 +254,15 @@ function ShowMarkers(dis_in_meters)
           {
 		
 	  if (isNaN(locations [count][15] ))
-              { myIcon  = 'red-blank.png' ; }
+              { myIcon  = 'RedIcon.png' ; }
  	  else
 	     if ( locations [count][15] < 1.1)
-		{ myIcon  = 'ylw-blank.png' ;}
+		{ myIcon  = 'YellowIcon.png' ;}
 	     else
  		if ( (locations [count][15] > 1 ) && ( locations [count][15] < 2.55))
-		   { myIcon  = 'orange-blank.png' ;}
+		   { myIcon  = 'OrangeIcon.png' ;}
 	 	else
-	 	{  myIcon  = 'red-blank.png' ;}  
+	 	{  myIcon  = 'RedIcon.png' ;}  
 	
 		  
 		  
